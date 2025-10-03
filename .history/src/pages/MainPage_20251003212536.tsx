@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { useExpense } from "@/hooks/useExpense";
 
 function MainPage() {
-  const { logout} = useAuth();
+  const { logout,token ,user} = useAuth();
   const { expenseList } = useExpense();
 
   const getExpense=async()=>{
 try{
-  const res=await expenseList();
+  const res=await expenseList(token,user);
   console.log(res);
   
 }catch{

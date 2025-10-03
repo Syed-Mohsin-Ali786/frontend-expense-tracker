@@ -1,11 +1,12 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3030", // backend base URL
+  baseURL: "http://localhost:3030",
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
-  // Add JSON header for write requests
+  // Add JSON header for write operations
   if (config.method && ["post", "put", "patch"].includes(config.method)) {
     config.headers["Content-Type"] = "application/json";
   }
@@ -13,7 +14,7 @@ api.interceptors.request.use((config) => {
   // Attach token if available
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;

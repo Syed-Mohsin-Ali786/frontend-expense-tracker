@@ -2,7 +2,7 @@
 import { createContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import api from "@/api/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 // User type from backend
 interface User {

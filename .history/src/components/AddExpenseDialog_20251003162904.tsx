@@ -4,19 +4,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useExpense } from "@/hooks/useExpense";
-
+import { DialogDescription } from "@radix-ui/react-dialog";
+import { useNavigate } from "react-router-dom";
 
 export function AddExpenseDialog() {
+  const navigate = useNavigate();
   const { addExpense } = useExpense();
-
-  const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
     amount: "",
     category: "",
@@ -30,35 +29,30 @@ export function AddExpenseDialog() {
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
 
+    try {
       await addExpense({
         ...form,
         date: new Date(form.date),
         amount: Number(form.amount),
       });
-
-      // reset form
       setForm({
         amount: "",
         category: "",
         date: "",
         description: "",
       });
-
-      setOpen(false);  
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
   };
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
-        <Button variant="expense">Add Expense</Button>
+        <Button variant={"expense"}>Add Expense</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -76,7 +70,6 @@ export function AddExpenseDialog() {
               name="amount"
               value={form.amount}
               onChange={handleChange}
-              required
             />
           </div>
           <div>
@@ -87,7 +80,6 @@ export function AddExpenseDialog() {
               name="category"
               value={form.category}
               onChange={handleChange}
-              required
             />
           </div>
           <div>
@@ -97,7 +89,6 @@ export function AddExpenseDialog() {
               name="date"
               value={form.date}
               onChange={handleChange}
-              required
             />
           </div>
           <div>
@@ -108,7 +99,6 @@ export function AddExpenseDialog() {
               name="description"
               value={form.description}
               onChange={handleChange}
-              required
             />
           </div>
           <Button type="submit" className="w-full">

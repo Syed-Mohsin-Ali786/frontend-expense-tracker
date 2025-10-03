@@ -4,28 +4,12 @@ import { useEffect } from "react";
 import { useExpense } from "@/hooks/useExpense";
 
 function MainPage() {
-  const { logout} = useAuth();
+  const { logout } = useAuth();
   const { expenseList } = useExpense();
-
-  const getExpense=async()=>{
-try{
-  const res=await expenseList();
-  console.log(res);
-  
-}catch{
-  throw new Error("somt")
-}
-  }
   useEffect(() => {
-  //  (async () => {
-  //    try {
-  //      const res = await expenseList();
-  //      console.log(res);
-  //    } catch (error) {
-  //      console.error(error);
-  //    }
-  //  })();
-   getExpense()
+   const res= expenseList();
+   console.log(res);
+   
   }, []);
   return (
     <div className=" mt-4 mx-4 p-4">

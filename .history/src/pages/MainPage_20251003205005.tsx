@@ -1,32 +1,12 @@
 import { useAuth } from "@/hooks/useAuth";
 import { AddExpenseDialog } from "../components/AddExpenseDialog";
 import { useEffect } from "react";
-import { useExpense } from "@/hooks/useExpense";
 
 function MainPage() {
-  const { logout} = useAuth();
-  const { expenseList } = useExpense();
-
-  const getExpense=async()=>{
-try{
-  const res=await expenseList();
-  console.log(res);
-  
-}catch{
-  throw new Error("somt")
-}
-  }
-  useEffect(() => {
-  //  (async () => {
-  //    try {
-  //      const res = await expenseList();
-  //      console.log(res);
-  //    } catch (error) {
-  //      console.error(error);
-  //    }
-  //  })();
-   getExpense()
-  }, []);
+  const { logout } = useAuth();
+  useEffect(()=>{
+listExpense()
+  },[])
   return (
     <div className=" mt-4 mx-4 p-4">
       {/* Header */}

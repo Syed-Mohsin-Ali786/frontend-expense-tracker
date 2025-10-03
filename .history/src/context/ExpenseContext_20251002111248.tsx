@@ -1,0 +1,12 @@
+import { createContext, type ReactNode } from "react";
+
+const ExpenseContext=createContext<ExpenseContextType>()
+const ExpenseProvider=({children}:{children:ReactNode})=>{
+return(
+    <ExpenseProvider>
+        {children}
+    </ExpenseProvider>
+)
+}
+
+export default ExpenseProvider;

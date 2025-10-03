@@ -34,7 +34,6 @@ export function AddExpenseDialog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-
       await addExpense({
         ...form,
         date: new Date(form.date),
@@ -76,7 +75,6 @@ export function AddExpenseDialog() {
               name="amount"
               value={form.amount}
               onChange={handleChange}
-              required
             />
           </div>
           <div>
@@ -87,7 +85,6 @@ export function AddExpenseDialog() {
               name="category"
               value={form.category}
               onChange={handleChange}
-              required
             />
           </div>
           <div>
@@ -97,7 +94,6 @@ export function AddExpenseDialog() {
               name="date"
               value={form.date}
               onChange={handleChange}
-              required
             />
           </div>
           <div>
@@ -108,7 +104,6 @@ export function AddExpenseDialog() {
               name="description"
               value={form.description}
               onChange={handleChange}
-              required
             />
           </div>
           <Button type="submit" className="w-full">
