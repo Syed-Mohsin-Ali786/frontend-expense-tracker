@@ -1,5 +1,5 @@
 import api from "@/api/axios";
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, type ReactNode } from "react";
 
 export interface ExpenseForm {
   amount: number;
@@ -19,14 +19,12 @@ export interface Expense {
 
 export interface ExpenseContextType {
   addExpense: (form: ExpenseForm) => Promise<Expense | null>;
-  expenseList: () => Promise<void>;
-  expenses: Expense[];
+  expenseList: () => Promise<Expense[]>;
 }
 
 const ExpenseContext = createContext<ExpenseContextType | null>(null);
 
 export default function ExpenseProvider({ children }: { children: ReactNode }) {
-  const [expenses, setExpenses] = useState<Expense[]>([]);
   const addExpense = async (form: ExpenseForm): Promise<Expense | null> => {
     try {
       const res = await api.post("/api/expense/add", form);
@@ -37,19 +35,18 @@ export default function ExpenseProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const expenseList = async (): Promise<void> => {
+  const expenseList = async (): Promise<Expense[]> => {
     try {
       const res = await api.get("/api/expense/list");
-      setExpenses(res.data.data || []);
+      return res.data.data || []; // ensure it always returns an array
     } catch (error) {
       console.log(error);
+      return []; // fallback
     }
   };
-  useEffect(() => {
-    expenseList();
-  }, []);
+
   return (
-    <ExpenseContext.Provider value={{ addExpense, expenseList, expenses }}>
+    <ExpenseContext.Provider value={{ addExpense, expenseList }}>
       {children}
     </ExpenseContext.Provider>
   );

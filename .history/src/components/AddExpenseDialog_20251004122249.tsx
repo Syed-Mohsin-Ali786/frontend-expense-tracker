@@ -79,7 +79,7 @@ export function AddExpenseDialog() {
               name="category"
               value={form.category}
               onChange={handleChange}
-              className="rounded-lg border dark:bg-input/30 bg-transparent text-base shadow-xs transition-[color,box-shadow]  border-gray-300 focus:ring-blue-400 py-2 px-3"
+              className="rounded-lg border hover:outline-lime-950 border-gray-300 focus:ring-blue-400 py-2 px-3"
               required
             >
               <option value="">Select a category</option>
@@ -114,7 +114,7 @@ export function AddExpenseDialog() {
           </div>
           <Button
             type="submit"
-            className="w-full bg-green-600 text-white hover:bg-green-600 transition-all py-2 rounded-lg shadow-md"
+            className="w-full bg-green-500 text-white hover:bg-green-600 transition-all py-2 rounded-lg shadow-md"
           >
             Save Expense
           </Button>

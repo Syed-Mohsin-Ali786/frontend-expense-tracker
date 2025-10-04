@@ -1,20 +1,34 @@
 import { useAuth } from "@/hooks/useAuth";
 import { AddExpenseDialog } from "../components/AddExpenseDialog";
-
+import { useEffect, useState } from "react";
 import { useExpense } from "@/hooks/useExpense";
-export interface Expense {
-  _id?: string;
-  user?: string;
-  amount: number;
+
+interface Expense {
+  _id?: string; // use _id from backend
+  description: string;
   category: string;
   date: string;
-  description: string;
+  amount: number;
 }
 
 function MainPage() {
-  
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const { logout } = useAuth();
-  const { expenses } = useExpense ();
+  const { expenseList } = useExpense();
+  
+  const getExpenseList = async (): Promise<void> => {
+    try {
+      const res = await expenseList(); // res should be Expense[]
+      setExpenses(res || []); // fallback to empty array
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getExpenseList();
+  }, []);
+
 
   return (
     <div className="mt-4 mx-4 p-4">

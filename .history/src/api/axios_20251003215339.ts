@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://localhost:3030",
-  
+  withCredentials: true, // only needed if backend sets cookies
 });
 
 // Add token automatically for every request
@@ -13,7 +13,6 @@ api.interceptors.request.use((config) => {
 
   // ✅ Attach JWT token from localStorage
   const token = localStorage.getItem("token");
-  
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
   }

@@ -114,7 +114,7 @@ export function AddExpenseDialog() {
           </div>
           <Button
             type="submit"
-            className="w-full bg-green-600 text-white hover:bg-green-600 transition-all py-2 rounded-lg shadow-md"
+            className="w-full bg-green-500 text-white hover:bg-green-600 transition-all py-2 rounded-lg shadow-md"
           >
             Save Expense
           </Button>

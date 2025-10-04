@@ -1,5 +1,5 @@
 import api from "@/api/axios";
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useState, type ReactNode } from "react";
 
 export interface ExpenseForm {
   amount: number;
@@ -19,8 +19,8 @@ export interface Expense {
 
 export interface ExpenseContextType {
   addExpense: (form: ExpenseForm) => Promise<Expense | null>;
-  expenseList: () => Promise<void>;
-  expenses: Expense[];
+   expenseList: () => Promise<void>;
+     expenses: Expense[];
 }
 
 const ExpenseContext = createContext<ExpenseContextType | null>(null);
@@ -36,20 +36,18 @@ export default function ExpenseProvider({ children }: { children: ReactNode }) {
       return null; // always return something
     }
   };
-
-  const expenseList = async (): Promise<void> => {
+  
+  const expenseList = async ()=> {
     try {
       const res = await api.get("/api/expense/list");
-      setExpenses(res.data.data || []);
+      setExpenses( res.data.data || []); 
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    expenseList();
-  }, []);
+
   return (
-    <ExpenseContext.Provider value={{ addExpense, expenseList, expenses }}>
+    <ExpenseContext.Provider value={{ addExpense, expenseList,expenses }}>
       {children}
     </ExpenseContext.Provider>
   );

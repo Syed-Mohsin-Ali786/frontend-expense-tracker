@@ -1,0 +1,91 @@
+import { useAuth } from "@/hooks/useAuth";
+import { AddExpenseDialog } from "../components/AddExpenseDialog";
+import { useEffect, useState } from "react";
+import { useExpense } from "@/hooks/useExpense";
+
+interface Expense {
+  id?: string;
+  description: string;
+  category: string;
+  date: string;
+  amount: number;
+}
+
+function MainPage() {
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const { logout } = useAuth();
+  const { expenseList } = useExpense();
+
+  const getExpenseList = async () => {
+    try {
+      const res = (await expenseList()) as Expense[] | void;
+      if (res && Array.isArray(res)) {
+        setExpenses(res as Expense[]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getExpenseList();
+  }, []);
+
+  
+  return (
+    <div className=" mt-4 mx-4 p-4">
+      {/* Header */}
+      <header className="flex items-center justify-between">
+        <h1 className="text-4xl  font-semibold">Expense Tracker</h1>
+        <button
+          onClick={() => logout()}
+          className="cursor-pointer border border-blue-500 py-2 px-3 md:px-6 lg:px-8 rounded font-semibold text-blue-500 text-2xl hover:bg-blue-500 hover:text-[#fff]"
+        >
+          Log out
+        </button>
+      </header>
+
+      {/* The main page */}
+      <section className="mt-6 shadow border-gray-200 border px-4">
+        {/* Expenses */}
+        <div className="flex flex-col justify-between mt-4 ">
+          <div className="flex justify-between items-center ">
+            <h1 className="text-4xl  font-semibold">Expenses</h1>
+            <AddExpenseDialog />
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="py-2 px-4 w-full text-2xl border-gray-300 border rounded-[12px] mt-4 outline-gray-500 "
+            />
+           
+            <div className="flex text-2xl items-center justify-between mt-4 border-gray-200 border-b">
+              <p>Description</p>
+              <p>Category</p>
+              <p>Date</p>
+              <p>Amount</p>
+            </div>
+            <div className="flex text-xl items-center justify-between mt-4 border-gray-200 border-b">
+               {expenses &&
+                expenses.map((e, index) => {
+                  return (
+                    <div key={index}>
+                      <p>{e.description}</p>
+                      <p>{e.category}</p>
+                      <p>{e.date}</p>
+                      <p>{e.amount}</p>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+        {/* Charts */}
+        <div></div>
+      </section>
+    </div>
+  );
+}
+
+export default MainPage;

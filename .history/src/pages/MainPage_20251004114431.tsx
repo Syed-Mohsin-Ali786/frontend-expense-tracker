@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { AddExpenseDialog } from "../components/AddExpenseDialog";
-
+import { useEffect } from "react";
 import { useExpense } from "@/hooks/useExpense";
 export interface Expense {
   _id?: string;
@@ -14,7 +14,14 @@ export interface Expense {
 function MainPage() {
   
   const { logout } = useAuth();
-  const { expenses } = useExpense ();
+  const { expenseList,expenses } = useExpense ();
+  
+ 
+
+  useEffect(() => {
+    expenseList();
+  }, []);
+
 
   return (
     <div className="mt-4 mx-4 p-4">

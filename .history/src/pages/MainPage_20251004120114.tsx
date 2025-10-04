@@ -15,6 +15,11 @@ function MainPage() {
   
   const { logout } = useAuth();
   const { expenses } = useExpense ();
+  
+ 
+
+  
+
 
   return (
     <div className="mt-4 mx-4 p-4">

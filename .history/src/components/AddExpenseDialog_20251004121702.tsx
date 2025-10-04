@@ -14,7 +14,7 @@ import { useExpense } from "@/hooks/useExpense";
 
 export function AddExpenseDialog() {
   const { addExpense, expenseList } = useExpense();
-  const categories = ["Food", "Travel", "Shopping", "Bills", "Health", "Other"];
+
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
     amount: "",
@@ -23,7 +23,7 @@ export function AddExpenseDialog() {
     description: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -38,7 +38,14 @@ export function AddExpenseDialog() {
         date: new Date(form.date),
         amount: Number(form.amount),
       });
-      setForm({ amount: "", category: "", date: "", description: "" });
+
+      // reset form
+      setForm({
+        amount: "",
+        category: "",
+        date: "",
+        description: "",
+      });
       expenseList();
       setOpen(false);
     } catch (err) {
@@ -49,19 +56,17 @@ export function AddExpenseDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-blue-500 text-white hover:bg-blue-600 transition-all rounded-lg px-6 py-2 shadow-md">
-          + Add Expense
-        </Button>
+        <Button variant="expense">Add Expense</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md rounded-xl p-6 shadow-lg bg-white">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-gray-800">Add New Expense</DialogTitle>
-          <DialogDescription className="text-gray-500">
+          <DialogTitle>Add New Expense</DialogTitle>
+          <DialogDescription>
             Fill in the details below to add a new expense
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-5 mt-4">
-          <div className="flex flex-col">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
             <Label>Amount</Label>
             <Input
               type="number"
@@ -69,17 +74,15 @@ export function AddExpenseDialog() {
               name="amount"
               value={form.amount}
               onChange={handleChange}
-              className="rounded-lg border-gray-300 focus:ring-blue-400"
               required
             />
           </div>
-          <div className="flex flex-col">
+          <div>
             <Label>Category</Label>
             <select
               name="category"
               value={form.category}
               onChange={handleChange}
-              className="rounded-lg border dark:bg-input/30 bg-transparent text-base shadow-xs transition-[color,box-shadow]  border-gray-300 focus:ring-blue-400 py-2 px-3"
               required
             >
               <option value="">Select a category</option>
@@ -90,18 +93,17 @@ export function AddExpenseDialog() {
               ))}
             </select>
           </div>
-          <div className="flex flex-col">
+          <div>
             <Label>Date</Label>
             <Input
               type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
-              className="rounded-lg border-gray-300 focus:ring-blue-400"
               required
             />
           </div>
-          <div className="flex flex-col">
+          <div>
             <Label>Description</Label>
             <Input
               type="text"
@@ -109,14 +111,11 @@ export function AddExpenseDialog() {
               name="description"
               value={form.description}
               onChange={handleChange}
-              className="rounded-lg border-gray-300 focus:ring-blue-400"
+              required
             />
           </div>
-          <Button
-            type="submit"
-            className="w-full bg-green-600 text-white hover:bg-green-600 transition-all py-2 rounded-lg shadow-md"
-          >
-            Save Expense
+          <Button type="submit" className="w-full">
+            Save
           </Button>
         </form>
       </DialogContent>

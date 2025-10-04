@@ -1,5 +1,5 @@
 import api from "@/api/axios";
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useState, type ReactNode } from "react";
 
 export interface ExpenseForm {
   amount: number;
@@ -45,9 +45,7 @@ export default function ExpenseProvider({ children }: { children: ReactNode }) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    expenseList();
-  }, []);
+
   return (
     <ExpenseContext.Provider value={{ addExpense, expenseList, expenses }}>
       {children}

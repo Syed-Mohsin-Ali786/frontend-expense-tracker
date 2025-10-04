@@ -13,7 +13,6 @@ api.interceptors.request.use((config) => {
 
   // ✅ Attach JWT token from localStorage
   const token = localStorage.getItem("token");
-  
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
